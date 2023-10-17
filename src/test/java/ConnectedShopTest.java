@@ -1,3 +1,7 @@
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -9,33 +13,44 @@ import static org.junit.Assert.assertEquals;
 public class ConnectedShopTest {
     private WebDriver driver;
     private ConnectedShopHomePage homePage;
+    private Header header;
+//    homePage = new ConnectedShopHomePage(driver);
+//    header = new Header(driver);
 
-    @Before
-    public void setUp() {
 
+
+
+    @Given("I open on theconnectedshop.com homepage")
+    public void i_open_on_theconnectedshop_com_homepage() {
         driver = new ChromeDriver();
         homePage = new ConnectedShopHomePage(driver);
+        header = new Header(driver);
+        driver.manage().window().maximize();
+        driver.get("https://theconnectedshop.com");
     }
 
-    @Test
-    public void testConnectedShopMainPage() {
-        driver.get("https://theconnectedshop.com");
-
-
-        String expectedTitle = "The Connected Shop - Smart Locks, Smart Sensors, Smart Home &amp; Office";
-        String actualTitle = homePage.getTitle();
+    @Then("I check Title")
+    public void i_check_the_Title() {
+        String expectedTitle = "The Connected Shop - Smart Locks, Smart Sensors, Smart Home & Office";
+        String actualTitle = driver.getTitle();
         assertEquals(expectedTitle, actualTitle);
 
+
+    }
+    @And("I check qurrent url")
+        public void i_check_qurrent_url() {
         String expectedUrl = "https://theconnectedshop.com/";
         String actualUrl = homePage.getCurrentUrl();
         assertEquals(expectedUrl, actualUrl);
+//        header.testLogoImage();
+//        header.testMainManu();
 
     }
 
-    @After
-    public void tearDown() {
-        if (driver != null) {
+    @And("Close browser")
+       public void tearDown() {
+        if (driver != null)
             driver.quit();
-        }
     }
+
 }
