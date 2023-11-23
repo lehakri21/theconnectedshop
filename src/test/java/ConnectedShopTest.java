@@ -42,11 +42,20 @@ public class ConnectedShopTest {
         String expectedUrl = "https://theconnectedshop.com/";
         String actualUrl = homePage.getCurrentUrl();
         assertEquals(expectedUrl, actualUrl);
-//        header.testLogoImage();
-//        header.testMainManu();
+//
+//
+
 
     }
 
+    @Then("I check the logo")
+    public void i_check_the_logo() {
+        header.testLogoImage();
+    }
+    @Then("I check main manu")
+    public void i_check_main_manu() {
+        header.testMainManu();
+    }
     @And("Close browser")
        public void tearDown() {
         if (driver != null)
